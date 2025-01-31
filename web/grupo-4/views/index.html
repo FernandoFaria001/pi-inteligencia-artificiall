@@ -12,6 +12,164 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Botão de suporte */
+        .support-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .support-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Janela do chat */
+        .chat-window {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #ccc;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            /* Espaçamento entre as mensagens */
+        }
+
+        /* Estilo para as mensagens */
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+            /* Alinha mensagens do usuário à direita */
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+            /* Alinha mensagens do bot à esquerda */
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .message.user .message-content {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .message.bot .message-content {
+            background-color: #e1e1e1;
+            color: #333;
+        }
+
+        /* Triângulo do balão de mensagem */
+        .message.user .message-content::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 10px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent transparent #007bff;
+        }
+
+        .message.bot .message-content::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 10px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #e1e1e1 transparent transparent;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: white;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
@@ -71,6 +229,25 @@
             </div>
         </div>
     </div>
+
+    <!-- Botão de suporte -->
+    <button id="supportButton" class="support-button">Suporte</button>
+
+    <!-- Janela do chat -->
+    <div id="chatWindow" class="chat-window">
+        <div class="chat-header">
+            <span>Suporte</span>
+            <button id="closeChat" class="close-button">×</button>
+        </div>
+        <div id="chatMessages" class="chat-messages">
+            <!-- Exemplo de mensagem com foto de perfil e balão -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Digite sua mensagem..." />
+            <button id="sendButton">Enviar</button>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
 
     <!-- Recentes -->
     <section class="container mt-5">

@@ -5,6 +5,7 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const uniqueValidator = require('mongoose-unique-validator')
+const { sendMessageToGemini } = require('./gemini');
 
 const routes = require("./routes/Router")
 
@@ -114,3 +115,22 @@ app.listen(port, () => {
         console.log("Erro", e)
     }
 })
+
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        if (!message) {
+            return res.status(400).json({ error: "Mensagem é obrigatória" });
+        }
+
+        // Usar a função do gemini.js para enviar a mensagem ao Gemini
+        const response = await sendMessageToGemini(message);
+
+        // Retornar a resposta do Gemini
+        res.json({ response });
+    } catch (error) {
+        console.error("Erro ao processar a mensagem:", error);
+        res.status(500).json({ error: "Erro ao processar a mensagem" });
+    }
+});
